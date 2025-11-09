@@ -1,0 +1,142 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mystyle}[2025/10/27 Package pour sections colorées]
+
+\RequirePackage{xcolor}
+\RequirePackage{titlesec}
+\RequirePackage{calc}
+\RequirePackage{array}
+\RequirePackage{graphicx}
+
+% Géométrie pour s'adapter au bi-colonne
+\RequirePackage[a4paper, columnsep=1.5em, top=2cm, bottom=2cm, left=1.8cm, right=1.8cm]{geometry}
+
+% --- Encodage Classique pour pdflatex ---
+\RequirePackage[T1]{fontenc} % Encodage des polices
+\RequirePackage[utf8]{inputenc} % Encodage des caractères source (Obligatoire pour pdflatex)
+\RequirePackage[french]{babel} % Support linguistique français
+
+% --- Packages de Style de Publication ---
+\RequirePackage{titlesec} % Pour personnaliser les titres de section
+\RequirePackage{fancyhdr} % Pour personnaliser les en-têtes et pieds de page
+\RequirePackage{abstract} % Pour un environnement d'abstract propre
+\RequirePackage{booktabs} % Pour des tableaux de meilleure qualité
+\RequirePackage{enumitem} % Pour personnaliser les listes
+
+% --- Packages de Contenu ---
+\RequirePackage{amsmath} % Pour les équations
+\RequirePackage{float} % Pour la position des figures/tableaux. Utilisé avec [h]
+\RequirePackage{algorithm} % Pour les algorithmes
+\RequirePackage{algpseudocode} % Pour la syntaxe de l'algorithme
+\RequirePackage{hyperref} % Pour les liens cliquables (DERNIER package)
+
+
+% Couleur par défaut
+\definecolor{sectioncolor}{RGB}{23,52,90}
+
+
+\DeclareOption{red}{%
+    \colorlet{sectioncolor}{red}%
+}
+
+% Option générique : le nom de la couleur à utiliser
+\DeclareOption*{%
+    \colorlet{sectioncolor}{\CurrentOption}%
+}
+
+% Traitement des options
+\ProcessOptions\relax
+
+% Commande pour changer la couleur après le package
+\newcommand{\setsectioncolor}[1]{%
+    \colorlet{sectioncolor}{#1}%
+}
+
+\setlist[itemize]{label=-}
+
+
+
+% --- DÉFINITION DE NOTRE STYLE (.style Émulé) ---
+
+
+
+% 1. En-tête et Pied de page (Style Journal)
+
+\pagestyle{fancy}
+
+\fancyhead{} % Effacer les en-têtes
+
+\fancyfoot{} % Effacer les pieds
+
+% En-tête droit : Nom de l'article (abrégé)
+
+\fancyhead[R]{Big Data et Prise de Décision}
+
+% En-tête gauche : Auteurs
+
+\fancyhead[L]{A. Kaoutar et A. Sara}
+
+% Pied de page centre : Numéro de page
+
+\fancyfoot[C]{\thepage}
+
+\renewcommand{\headrulewidth}{0.4pt} % Ligne sous l'en-tête
+
+\renewcommand{\footrulewidth}{0.4pt} % Ligne au-dessus du pied de page
+
+% Redéfinition de \section avec couleur
+\titleformat{\section}
+    {\bfseries\color{sectioncolor}}
+    {\thesection}
+    {1ex}
+    {}
+    [\vspace{-.5ex}\titlerule]
+
+\titleformat{\subsection}
+    {\normalfont\bfseries\color{sectioncolor}}
+    {\thesubsection}
+    {1ex}
+    {}
+
+
+
+
+
+
+\renewenvironment{abstract}{
+
+    \newlength{\abstractwidth}
+    \setlength{\abstractwidth}{0.9\textwidth}
+    
+    \newlength{\abstractnamewidth}
+    \setlength{\abstractnamewidth}{\widthof{\abstractname}}
+    
+    \newlength{\abstractLength}
+    \setlength{\abstractLength}{\abstractwidth - \abstractnamewidth}
+    
+    \newcommand{\myrule}{\textcolor{sectioncolor}{\rule{0.48\abstractLength}{0.8pt}}}
+    \vspace{1ex}
+    \small
+    %\myrule\hfill\textsc{\textbf{\abstractname}}\hfill\myrule
+    %\begin{quote}
+    \begin{center}
+    \begin{minipage}{\abstractwidth}
+    \myrule\hfill\textsc{\textbf{\textcolor{sectioncolor}{\abstractname}}}\hfill\myrule
+
+    }
+{
+%\end{quote}
+\end{minipage}
+\vskip1ex
+\textcolor{sectioncolor}{\rule{\abstractwidth}{0.8pt}}
+ \end{center}
+}
+
+
+\newcommand{\keywords}[1]{%
+  \begin{flushleft}
+    \fcolorbox{sectioncolor}{white}{\textbf{\textcolor{sectioncolor}{Keywords}}} : #1
+  \end{flushleft}
+}
+
+
+\endinput
