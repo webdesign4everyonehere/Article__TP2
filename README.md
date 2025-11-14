@@ -6,4 +6,5 @@ Version 1 : article avec notre propre package de style.
 Version 2 : article avec notre propre package de style + option (clé-valeur).
 
 Exemple d’utilisation :
+
 \usepackage[titlecolor=green,showline=false,widthabstract=0.7]{mystyle}
