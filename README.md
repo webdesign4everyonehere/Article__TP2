@@ -3,7 +3,7 @@ TP2 – Rédaction Scientifique pour Ingénieur : Article réalisé par Sara AIT
 
 Version 1 : article avec notre propre package de style.
 
-Version 2 : article avec notre propre package de style + option (clé-valeur).
+Version 2 : article avec notre propre package de style + options (clé-valeur).
 
 Exemple d’utilisation :
 
