@@ -2,6 +2,7 @@
 TP2 – Rédaction Scientifique pour Ingénieur : Article réalisé par Sara AIT TALEB et Kaoutar ATOUF
 
 Version 1 : article avec notre propre package de style.
+
 Version 2 : article avec notre propre package de style + option (clé-valeur).
 
 Exemple d’utilisation :
