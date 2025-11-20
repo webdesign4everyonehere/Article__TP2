@@ -6,6 +6,8 @@
 \RequirePackage{calc}
 \RequirePackage{array}
 \RequirePackage{graphicx}
+\RequirePackage{pgffor}
+\RequirePackage{xstring}
 
 % Géométrie pour s'adapter au bi-colonne
 \RequirePackage[a4paper, columnsep=1.5em, top=2cm, bottom=2cm, left=1.8cm, right=1.8cm]{geometry}
@@ -132,11 +134,35 @@
 }
 
 
+% keywords macro robuste : accepte "a,b,c" ou "a.b.c" ou mix, et met un point final une seule fois
 \newcommand{\keywords}[1]{%
+  \begingroup
+  % raw input
+  \def\rawinput{#1}%
+  % si l'utilisateur a mis un point final, on l'enlève pour le moment
+  \IfEndWith{\rawinput}{.}{%
+    \StrGobbleRight{\rawinput}{1}[\tmpinput]%
+  }{%
+    \def\tmpinput{\rawinput}%
+  }%
+  % remplacer tous les points intérieurs par des virgules (pour uniformiser)
+  \StrSubstitute{\tmpinput}{.}{,}[\cleaninput]%
+  %
+  % compter les éléments (séparés par virgule)
+  \newcount\kwtotal
+  \kwtotal=0
+  \foreach \_ in {\cleaninput} { \advance\kwtotal by 1 }%
+  %
+  % affichage final : virgules entre éléments, point final seul
   \begin{flushleft}
-    \fcolorbox{sectioncolor}{white}{\textbf{\textcolor{sectioncolor}{Keywords}}} : #1
+    \fcolorbox{sectioncolor}{white}{\textbf{\textcolor{sectioncolor}{Keywords}}} :\;
+    \foreach \word [count=\i] in {\cleaninput} {%
+      \word%
+      \ifnum\i<\kwtotal ,\space \else.\fi
+    }%
   \end{flushleft}
+  \endgroup
 }
 
-
 \endinput
+
